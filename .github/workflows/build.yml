@@ -35,7 +35,10 @@ jobs:
     - name: Build firmware
       run: |
         mkdir -p firmware
-        arduino-cli compile --fqbn esp8266:esp8266:d1_mini_pro --output-dir firmware .
+        arduino-cli compile \
+          --fqbn esp8266:esp8266:d1_mini_pro \
+          --build-properties build.flash_size=16M1M \
+          --output-dir firmware .
         cp firmware/*.bin firmware/firmware.bin
 
     - name: Deploy to GitHub Pages
