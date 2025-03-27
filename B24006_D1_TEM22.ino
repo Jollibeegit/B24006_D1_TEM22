@@ -2,7 +2,9 @@
 #include <ModbusMaster.h>
 #include <SoftwareSerial.h>
 #include <WiFiManager.h>
-#include <ArduinoOTA.h>//ota테스트
+#include <ArduinoOTA.h>
+#include <ESP8266HTTPClient.h>
+#include <ESP8266httpUpdate.h>
 
 #define RESET_BUTTON_PIN D3  // 리셋 버튼 핀
 #define PIN_OUT D4           // Modbus TX/RX 전환 핀
@@ -36,6 +38,27 @@ void postTransmission() { digitalWrite(PIN_OUT, 0); }
 int16_t getSignedValue(uint16_t value) {
   return (value > 32767) ? value - 65536 : value;
 }
+
+
+void checkForUpdate() {
+  WiFiClient client;
+  t_httpUpdate_return ret = ESPhttpUpdate.update(client, "https://b24006-d1-tem22.onrender.com/firmware.bin");
+
+  switch (ret) {
+    case HTTP_UPDATE_FAILED:
+      Serial.printf("❌ Update failed. Error (%d): %s\n", 
+        ESPhttpUpdate.getLastError(), 
+        ESPhttpUpdate.getLastErrorString().c_str());
+      break;
+    case HTTP_UPDATE_NO_UPDATES:
+      Serial.println("🔄 No updates.");
+      break;
+    case HTTP_UPDATE_OK:
+      Serial.println("✅ Update successful!");
+      break;
+  }
+}
+
 
 void setup() {
   pinMode(PIN_OUT, OUTPUT);
@@ -73,10 +96,13 @@ void setup() {
   ArduinoOTA.begin();
   ESP.wdtDisable();
   ESP.wdtEnable(WDTO_8S);
+
 }
 
 void loop() {
+  
   ESP.wdtFeed();
+  checkForUpdate();
 
   // ✅ 1분마다 LED 하트비트 깜빡
   if (millis() - lastBlinkTime >= blinkInterval && !ledBlinking) {
