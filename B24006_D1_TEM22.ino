@@ -2,7 +2,7 @@
 #include <ModbusMaster.h>
 #include <SoftwareSerial.h>
 #include <WiFiManager.h>
-#include <ArduinoOTA.h>
+#include <ArduinoOTA.h>//ota테스트
 
 #define RESET_BUTTON_PIN D3  // 리셋 버튼 핀
 #define PIN_OUT D4           // Modbus TX/RX 전환 핀
