@@ -2,6 +2,7 @@
 #include <ModbusMaster.h>
 #include <SoftwareSerial.h>
 #include <WiFiManager.h>
+#include <ArduinoOTA.h>
 
 #define RESET_BUTTON_PIN D3  // 리셋 버튼 핀
 #define PIN_OUT D4           // Modbus TX/RX 전환 핀
@@ -69,7 +70,7 @@ void setup() {
   } else {
     Serial.println("No saved Wi-Fi credentials found");
   }
-
+  ArduinoOTA.begin();
   ESP.wdtDisable();
   ESP.wdtEnable(WDTO_8S);
 }
@@ -175,4 +176,5 @@ void loop() {
       }
     }
   }
+  ArduinoOTA.handle();
 }
