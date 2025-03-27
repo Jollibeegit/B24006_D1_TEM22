@@ -3,7 +3,7 @@ name: Build Firmware
 on:
   push:
     branches:
-      - main  # 또는 네가 사용하는 브랜치 이름
+      - main
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Arduino CLI
         uses: arduino/setup-arduino-cli@v1
         with:
-          version: latest
+          version: 0.35.3
 
       - name: Install board platforms
         run: |
@@ -41,10 +41,9 @@ jobs:
             --output-dir firmware .
 
       - name: Rename firmware binary for OTA
-        run: |
-          cp firmware/*.bin firmware/firmware.bin
+        run: cp firmware/*.bin firmware/firmware.bin
 
-      - name: Upload firmware to GitHub Pages (optional)
+      - name: Upload firmware to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
