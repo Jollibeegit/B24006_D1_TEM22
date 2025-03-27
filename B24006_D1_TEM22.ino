@@ -109,6 +109,7 @@ void loop() {
     digitalWrite(LED_PIN, LOW);  // LED ON
     ledBlinking = true;
     lastBlinkTime = millis();
+    Serial.println("1");
   }
   if (ledBlinking && millis() - lastBlinkTime >= 200) {
     digitalWrite(LED_PIN, HIGH);  // LED OFF
