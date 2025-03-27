@@ -28,7 +28,7 @@ jobs:
 
     - name: Build firmware
       run: |
-        arduino-cli compile --fqbn esp8266:esp8266:d1_mini_pro B24006_D1_TEM22
+        arduino-cli compile --fqbn esp8266:esp8266:d1_mini_pro .
         mkdir firmware
         cp B24006_D1_TEM22/build/esp8266.*/B24006_D1_TEM22.ino.bin firmware/firmware.bin
 
