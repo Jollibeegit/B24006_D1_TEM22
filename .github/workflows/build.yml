@@ -36,4 +36,6 @@ jobs:
       run: |
         mkdir -p firmware
         arduino-cli compile --fqbn esp8266:esp8266:d1_mini_pro --output-dir firmware .
-        cp firmware/*.bin firmware/firmware.bin
+        BIN_FILE=$(ls firmware/*.bin | head -n 1)
+        cp "$BIN_FILE" firmware/firmware.bin
+
