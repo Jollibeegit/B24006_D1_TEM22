@@ -16,10 +16,11 @@ jobs:
       - name: Install Arduino CLI manually
         run: |
           curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-          echo "$HOME/bin" >> $GITHUB_PATH
+          echo "$PWD/bin" >> $GITHUB_PATH
+          export PATH="$PWD/bin:$PATH"
           arduino-cli version
 
-      - name: Install board platforms
+      - name: Configure Arduino CLI and Install ESP8266
         run: |
           arduino-cli config init
           arduino-cli config add board_manager.additional_urls https://arduino.esp8266.com/stable/package_esp8266com_index.json
@@ -32,7 +33,7 @@ jobs:
           arduino-cli lib install "WiFiManager"
           arduino-cli lib install "ArduinoOTA"
 
-      - name: Compile firmware
+      - name: Compile firmware (for OTA)
         run: |
           mkdir -p firmware
           arduino-cli compile \
