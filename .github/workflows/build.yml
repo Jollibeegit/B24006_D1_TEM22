@@ -31,7 +31,6 @@ jobs:
       run: |
         arduino-cli lib install "ModbusMaster"
         arduino-cli lib install "WiFiManager"
-        arduino-cli lib install "SoftwareSerial"
         arduino-cli lib install "ArduinoOTA"
 
     - name: Build firmware
