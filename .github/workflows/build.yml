@@ -35,9 +35,10 @@ jobs:
 
     - name: Build firmware
       run: |
-        arduino-cli compile --fqbn esp8266:esp8266:d1_mini_pro .
-        mkdir -p firmware
-        cp ./build/esp8266.*/B24006_D1_TEM22.ino.bin firmware/firmware.bin
+       mkdir -p firmware
+       arduino-cli compile --fqbn esp8266:esp8266:d1_mini_pro --output-dir firmware .
+       cp firmware/*.bin firmware/firmware.bin
+
     - name: Upload firmware to Web Server (via SCP)
       uses: appleboy/scp-action@v0.1.3
       with:
